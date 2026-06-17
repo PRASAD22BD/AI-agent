@@ -23,4 +23,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["npm", "start", "--", "-p", "3000"]
+# Use the PORT env var if available, otherwise default to 3000
+CMD ["sh", "-c", "npm start -- -p ${PORT:-3000}"]
