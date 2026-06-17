@@ -4,7 +4,7 @@ services:
     env: docker
     plan: free
     dockerContext: frontend
-    dockerfile: frontend/Dockerfile
+    dockerfilePath: frontend/Dockerfile
     envVars:
       - key: NEXT_PUBLIC_SUPABASE_URL
         sync: false
@@ -18,7 +18,7 @@ services:
     env: docker
     plan: free
     dockerContext: backend
-    dockerfile: backend/Dockerfile
+    dockerfilePath: backend/Dockerfile
     healthCheckPath: /
     envVars:
       - key: SUPABASE_URL
@@ -35,7 +35,7 @@ services:
     env: docker
     plan: free
     dockerContext: n8n
-    dockerfile: n8n/Dockerfile
+    dockerfilePath: n8n/Dockerfile
     envVars:
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
@@ -49,4 +49,4 @@ services:
     env: docker
     plan: free
     dockerContext: playwright
-    dockerfile: playwright/Dockerfile
+    dockerfilePath: playwright/Dockerfile
