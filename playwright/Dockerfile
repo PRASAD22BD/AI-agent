@@ -8,4 +8,4 @@ RUN playwright install --with-deps chromium
 
 COPY . .
 
-CMD ["python", "worker.py"]
+CMD ["sh", "-c", "python worker.py"]
