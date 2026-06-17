@@ -6,12 +6,12 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     
     # Supabase
-    SUPABASE_URL: str
-    SUPABASE_KEY: str
-    SUPABASE_JWT_SECRET: str
+    SUPABASE_URL: str = "https://placeholder.supabase.co"
+    SUPABASE_KEY: str = "placeholder"
+    SUPABASE_JWT_SECRET: str = "placeholder"
     
     # Gemini
-    GEMINI_API_KEY: str
+    GEMINI_API_KEY: str = "placeholder"
     
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]

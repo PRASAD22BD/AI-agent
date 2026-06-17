@@ -9,12 +9,15 @@ services:
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
+      - key: PORT
+        value: "3000"
 
   - type: web
     name: ai-agent-backend
     env: docker
     plan: free
     dockerContext: backend
+    healthCheckPath: /
     envVars:
       - key: SUPABASE_URL
         sync: false
