@@ -1,0 +1,66 @@
+{
+  "name": "Workflow 5: Application Tracking",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "name": "Daily Check",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "table": "applications",
+        "filters": {
+          "status": "applied"
+        }
+      },
+      "name": "Get Applied Jobs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "message": "Checking status for {{ $json.company }}"
+      },
+      "name": "Notify Status Change",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Daily Check": {
+      "main": [
+        [
+          {
+            "node": "Get Applied Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Applied Jobs": {
+      "main": [
+        [
+          {
+            "node": "Notify Status Change",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

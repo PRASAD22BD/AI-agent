@@ -1,0 +1,82 @@
+{
+  "name": "Workflow 4: Application Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "apply-job"
+      },
+      "name": "Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "Generate a matching score and cover letter for this job application."
+      },
+      "name": "Gemini Assistant",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "email": "user@example.com",
+        "subject": "Approval Required: Job Application",
+        "message": "Please approve the application for {{ $json.company }}"
+      },
+      "name": "User Approval",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://playwright-worker:3000/apply",
+        "method": "POST",
+        "body": "={{ $json }}"
+      },
+      "name": "Playwright Apply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gemini Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Assistant": {
+      "main": [
+        [
+          {
+            "node": "User Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Approval": {
+      "main": [
+        [
+          {
+            "node": "Playwright Apply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
