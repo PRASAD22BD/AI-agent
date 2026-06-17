@@ -13,4 +13,5 @@ RUN playwright install --with-deps chromium
 
 COPY . .
 
+# Use the PORT env var provided by Render
 CMD ["sh", "-c", "python worker.py"]
