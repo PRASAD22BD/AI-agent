@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/playwright:v1.47.0-jammy
 
 WORKDIR /app
 
-# Install Python and pip
+# Install Python and pip accurately
 RUN apt-get update && apt-get install -y python3 python3-pip && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     ln -s /usr/bin/pip3 /usr/bin/pip
@@ -13,5 +13,5 @@ RUN playwright install --with-deps chromium
 
 COPY . .
 
-# Use the PORT env var provided by Render
+# Ensure the worker is named worker.py in the directory
 CMD ["sh", "-c", "python worker.py"]

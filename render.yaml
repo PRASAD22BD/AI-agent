@@ -1,25 +1,27 @@
 services:
+  # 1. Frontend: Next.js 15
   - type: web
     name: ai-agent-frontend
     env: docker
     plan: free
     dockerContext: frontend
-    dockerfilePath: frontend/Dockerfile
+    dockerfilePath: Dockerfile
     envVars:
       - key: NEXT_PUBLIC_SUPABASE_URL
         sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         sync: false
-      - key: PORT
-        value: "3000"
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
 
+  # 2. Backend: FastAPI
   - type: web
     name: ai-agent-backend
     env: docker
     plan: free
     dockerContext: backend
-    dockerfilePath: backend/Dockerfile
-    healthCheckPath: /
+    dockerfilePath: Dockerfile
+    healthCheckPath: /api/v1/
     envVars:
       - key: SUPABASE_URL
         sync: false
@@ -30,27 +32,29 @@ services:
       - key: GEMINI_API_KEY
         sync: false
 
+  # 3. Workflow Engine: n8n (Official)
   - type: web
     name: ai-agent-n8n
     env: docker
     plan: free
     dockerContext: n8n
-    dockerfilePath: n8n/Dockerfile
+    dockerfilePath: Dockerfile
     envVars:
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_RUNNERS_ENABLED
+        value: "true"
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
       - key: N8N_BASIC_AUTH_USER
         sync: false
       - key: N8N_BASIC_AUTH_PASSWORD
         sync: false
-      - key: N8N_PORT
-        value: "10000"
-      - key: N8N_RUNNERS_GRANT_TOKEN_TTL
-        value: "60"
 
+  # 4. Automation Worker: Playwright
   - type: web
     name: ai-agent-playwright
     env: docker
     plan: free
     dockerContext: playwright
-    dockerfilePath: playwright/Dockerfile
+    dockerfilePath: Dockerfile

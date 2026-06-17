@@ -1,9 +1,9 @@
-FROM n8nio/n8n:latest-debian
+FROM n8nio/n8n:latest
 
-USER root
-RUN apt-get update && apt-get install -y python3 python3-pip
-RUN npm install -g n8n-nodes-base
-USER node
+# Use official n8n defaults but ensure port 5678 is exposed for Render
+ENV N8N_PORT=5678
+ENV N8N_RUNNERS_ENABLED=true
 
-# Render uses the PORT env var, n8n uses N8N_PORT
-CMD ["sh", "-c", "export N8N_PORT=${PORT:-10000} && n8n start"]
+EXPOSE 5678
+
+# No custom CMD needed, official entrypoint is best
