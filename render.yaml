@@ -3,51 +3,47 @@ services:
   - type: web
     name: ai-job-agent-frontend
     env: docker
-    dockerContext: frontend
-    dockerFilePath: frontend/Dockerfile
+    region: oregon
     plan: free
+    dockerContext: frontend
+    dockerFilePath: Dockerfile
     envVars:
       - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        sync: false
 
   # Backend Service
   - type: web
     name: ai-job-agent-backend
     env: docker
-    dockerContext: backend
-    dockerFilePath: backend/Dockerfile
+    region: oregon
     plan: free
+    dockerContext: backend
+    dockerFilePath: Dockerfile
     envVars:
       - key: SUPABASE_URL
-        sync: false
       - key: SUPABASE_KEY
-        sync: false
       - key: SUPABASE_JWT_SECRET
-        sync: false
       - key: GEMINI_API_KEY
-        sync: false
 
   # n8n Service
   - type: web
     name: ai-job-agent-n8n
     env: docker
-    dockerContext: n8n
-    dockerFilePath: n8n/Dockerfile
+    region: oregon
     plan: free
+    dockerContext: n8n
+    dockerFilePath: Dockerfile
     envVars:
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
       - key: N8N_BASIC_AUTH_USER
-        sync: false
       - key: N8N_BASIC_AUTH_PASSWORD
-        sync: false
 
-  # Playwright Worker (Converted to web for Free Plan)
+  # Playwright Worker
   - type: web
     name: ai-job-agent-playwright
     env: docker
-    dockerContext: playwright
-    dockerFilePath: playwright/Dockerfile
+    region: oregon
     plan: free
+    dockerContext: playwright
+    dockerFilePath: Dockerfile
